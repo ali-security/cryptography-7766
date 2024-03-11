@@ -46,7 +46,7 @@ jobs:
           # Latest commit on the BoringSSL master branch, as of May 27, 2023.
           - {VERSION: "3.11", NOXSESSION: "tests", OPENSSL: {TYPE: "boringssl", VERSION: "b0a026f8541c551854efd617021bb276f1fe5c23"}}
           # Latest commit on the OpenSSL master branch, as of May 30, 2023.
-          - {VERSION: "3.11", NOXSESSION: "tests", OPENSSL: {TYPE: "openssl", VERSION: "36424806d699233b9a90a3a97fff3011828e2548"}}
+          - {VERSION: "3.11", NOXSESSION: "tests", OPENSSL: {TYPE: "openssl", VERSION: "afd8e29c360376420ea676581aa5d50b6027d069"}}
           # Builds with various Rust versions. Includes MSRV and potential
           # future MSRV:
           # 1.60 - pem 2.0.1
