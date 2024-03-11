@@ -35,7 +35,7 @@ impl FixedPool {
         })
     }
 
-    #[allow(clippy::unnecessary_fallible_conversions)] fn acquire(slf: pyo3::Py<Self>, py: pyo3::Python<'_>) -> pyo3::PyResult<PoolAcquisition> {
+    fn acquire(slf: pyo3::Py<Self>, py: pyo3::Python<'_>) -> pyo3::PyResult<PoolAcquisition> {
         let v = slf.as_ref(py).borrow().value.replace(None);
         if let Some(value) = v {
             Ok(PoolAcquisition {
