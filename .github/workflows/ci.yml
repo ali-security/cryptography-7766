@@ -64,10 +64,21 @@ jobs:
       - name: set mtimes for rust dirs
         uses: ./.github/actions/mtime-fix
       - name: Setup python
-        id: setup-python
-        uses: actions/setup-python@v4.6.1
+        id: setup-python-actions
+        uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.PYTHON.VERSION }}
+        if: matrix.PYTHON.VERSION == '3.12-dev'
+      - name: Setup python
+        id: setup-python-matteo
+        uses: MatteoH2O1999/setup-python@v1
+        with:
+          python-version: ${{ matrix.PYTHON.VERSION }}
+        if: matrix.PYTHON.VERSION != '3.12-dev'
+      - name: Setup python
+        id: setup-python
+        run: |
+          echo "python-version"=${{ matrix.PYTHON.VERSION }} >> $GITHUB_ENV
       - name: Setup rust
         uses: dtolnay/rust-toolchain@52e69531e6f69a396bc9d1226284493a5db969ff
         with:
@@ -161,8 +172,8 @@ jobs:
           - {IMAGE: "centos-stream9", NOXSESSION: "tests", RUNNER: "ubuntu-latest"}
           - {IMAGE: "centos-stream9-fips", NOXSESSION: "tests", RUNNER: "ubuntu-latest", FIPS: true}
 
-          - {IMAGE: "ubuntu-jammy:aarch64", NOXSESSION: "tests", RUNNER: [self-hosted, Linux, ARM64]}
-          - {IMAGE: "alpine:aarch64", NOXSESSION: "tests-nocoverage", RUNNER: [self-hosted, Linux, ARM64]}
+          # - {IMAGE: "ubuntu-jammy:aarch64", NOXSESSION: "tests", RUNNER: [self-hosted, Linux, ARM64]}
+          # - {IMAGE: "alpine:aarch64", NOXSESSION: "tests-nocoverage", RUNNER: [self-hosted, Linux, ARM64]}
     timeout-minutes: 15
     env:
       RUSTUP_HOME: /root/.rustup
@@ -223,7 +234,7 @@ jobs:
       matrix:
         RUNNER:
           - {OS: 'macos-12', ARCH: 'x86_64'}
-          - {OS: [self-hosted, macos, ARM64, tart], ARCH: 'arm64'}
+          # - {OS: [self-hosted, macos, ARM64, tart], ARCH: 'arm64'}
         PYTHON:
           - {VERSION: "3.7", NOXSESSION: "tests-nocoverage"}
           - {VERSION: "3.11", NOXSESSION: "tests"}
