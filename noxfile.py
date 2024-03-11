@@ -182,16 +182,7 @@ def rust(session: nox.Session) -> None:
 
     with session.chdir("src/rust/"):
         session.run("cargo", "fmt", "--all", "--", "--check", external=True)
-        session.run(
-            "cargo",
-            "clippy",
-            "--",
-            "-D",
-            "warnings",
-            "-A",
-            "clippy::unnecessary_fallible_conversions",
-            external=True,
-        )
+        session.run("cargo", "clippy", "--", "-D", "warnings", external=True)
 
         build_output = session.run(
             "cargo",
